@@ -1,0 +1,1063 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon" type="image/x-icon" href="photos/abc.ico">
+    <link rel="shortcut icon" type="image/x-icon" href="photos/abc.ico">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Creative Media Production - ThriveMint</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .navbar.scrolled {
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo-text-image {
+            height: 45px;
+            object-fit: contain;
+            transition: all 0.3s ease;
+        }
+
+        .logo-text-image:hover {
+            transform: scale(1.05);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: #82c576;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #82c576;
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .menu-toggle span {
+            width: 25px;
+            height: 3px;
+            background: #333;
+            margin: 3px 0;
+            transition: 0.3s;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #82c576 0%, #56CCF2 100%);
+            min-height: 40vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><polygon fill="rgba(255,255,255,0.1)" points="0,1000 1000,800 1000,1000"/></svg>');
+            background-size: cover;
+        }
+
+        .hero-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            text-align: center;
+            color: white;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            margin-top: 5rem;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s ease forwards;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s ease 0.3s forwards;
+        }
+
+        /* Section Styles */
+        .section {
+            padding: 5rem 0;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s ease;
+        }
+
+        .section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 3rem;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.2rem;
+            color: #ffffff;
+            margin-bottom: 4rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Service Overview */
+        .service-overview {
+            background: #f8f9fa;
+        }
+
+        .overview-content {
+            max-width: 900px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .overview-text {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: #666;
+            margin-bottom: 1rem;
+        }
+
+        /* Content Types Grid */
+        .content-types {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        .content-card {
+            background: white;
+            padding: 3rem 2rem;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .content-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(135deg, #82c576, #56CCF2);
+        }
+
+        .content-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+        }
+
+        .content-icon {
+            width: 80px;
+            height: 80px;
+            background: #FFA447;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 2rem;
+            font-size: 2rem;
+            color: white;
+        }
+
+        .content-card h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 1rem;
+        }
+
+        .content-card p {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .content-features {
+            list-style: none;
+            text-align: left;
+        }
+
+        .content-features li {
+            padding: 0.3rem 0;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .content-features li i {
+            color: #82c576;
+            margin-right: 0.5rem;
+            width: 15px;
+        }
+
+        /* Process Section - Updated to 4 steps in one row */
+        .process {
+            background: linear-gradient(135deg, #82c576 0%, #56CCF2 100%);
+            color: white;
+        }
+
+        .process h2 {
+            color: white;
+        }
+
+        .process-steps {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 4rem;
+            margin-top: 3rem;
+            max-width: 1600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .process-step {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 2.5rem 1.5rem;
+            border-radius: 15px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            height: 320px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+        }
+
+        .step-number {
+            width: 60px;
+            height: 60px;
+            background: #FFA447;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 2rem;
+            font-size: 1.5rem;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .process-step h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            flex-shrink: 0;
+            line-height: 1.2;
+        }
+
+        .process-step p {
+            line-height: 1.4;
+            font-size: 0.9rem;
+            flex-grow: 1;
+            display: flex;
+            align-items: flex-start;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        /* Portfolio Section */
+        .portfolio {
+            background: #f8f9fa;
+        }
+
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .portfolio-item {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .portfolio-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .portfolio-image {
+            height: 200px;
+            background: linear-gradient(135deg, #82c576, #56CCF2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3rem;
+        }
+
+        .portfolio-content {
+            padding: 2rem;
+        }
+
+        .portfolio-item h4 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 1rem;
+        }
+
+        .portfolio-item p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .portfolio-metrics {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .metric {
+            text-align: center;
+            flex: 1;
+        }
+
+        .metric-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #82c576;
+        }
+
+        .metric-label {
+            font-size: 0.8rem;
+            color: #666;
+        }
+
+        /* Pricing Section */
+        .pricing {
+            background: white;
+        }
+
+        .pricing-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .pricing-card {
+            background: white;
+            border: 2px solid #f0f0f0;
+            border-radius: 20px;
+            padding: 3rem 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .pricing-card.featured {
+            border-color: #82c576;
+            transform: scale(1.05);
+        }
+
+        .pricing-card.featured::before {
+            content: 'MOST POPULAR';
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #82c576;
+            color: white;
+            padding: 0.5rem 2rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .pricing-card:hover {
+            border-color: #82c576;
+            box-shadow: 0 20px 40px rgba(130, 197, 118, 0.2);
+        }
+
+        .plan-name {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 1rem;
+        }
+
+        .plan-price {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #82c576;
+            margin-bottom: 0.5rem;
+        }
+
+        .plan-period {
+            color: #666;
+            margin-bottom: 2rem;
+        }
+
+        .plan-features {
+            list-style: none;
+            margin-bottom: 3rem;
+        }
+
+        .plan-features li {
+            padding: 0.5rem 0;
+            color: #666;
+        }
+
+        .plan-features li i {
+            color: #82c576;
+            margin-right: 0.5rem;
+        }
+
+        .plan-button {
+            background: #82c576;
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .plan-button:hover {
+            background: #6ba862;
+            transform: translateY(-2px);
+        }
+
+        /* CTA Section */
+         /* CTA Section */
+        .cta-section {
+            padding: 6rem 0;
+            background: #1a202c;
+            color: white;
+            text-align: center;
+        }
+
+        .cta-content {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .cta-section .section-title {
+            color: white;
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .cta-section .section-subtitle {
+            color: #cbd5e0;
+            margin-bottom: 3rem;
+        }
+
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+            background: linear-gradient(135deg, #82c576, #56CCF2);
+            color: white;
+            padding: 1.2rem 3rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(130, 197, 118, 0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(130, 197, 118, 0.4);
+        }
+
+        /* Footer */
+        .footer {
+            background: #0f172a;
+            color: white;
+            padding: 3rem 0 2rem;
+            text-align: center;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #82c576, #56CCF2);
+            color: white;
+            border-radius: 12px;
+            text-decoration: none;
+            font-size: 1.3rem;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(130, 197, 118, 0.3);
+        }
+
+        .footer p {
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: flex;
+            }
+
+            .nav-links {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: white;
+                flex-direction: column;
+                padding: 2rem;
+                box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+                transform: translateY(-100%);
+                opacity: 0;
+                visibility: hidden;
+                transition: all 0.3s ease;
+            }
+
+            .nav-links.active {
+                transform: translateY(0);
+                opacity: 1;
+                visibility: visible;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .content-types,
+            .portfolio-grid,
+            .pricing-cards {
+                grid-template-columns: 1fr;
+            }
+
+            .process-steps {
+                grid-template-columns: 1fr;
+            }
+
+            .pricing-card.featured {
+                transform: none;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .nav-container {
+                padding: 0 1rem;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .container {
+                padding: 0 1rem;
+            }
+
+            .section {
+                padding: 3rem 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <img src="photos/logo.png" alt="ThriveMint" class="logo-text-image">
+            </div>
+            <ul class="nav-links" id="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="index.html#services">Services</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+            <div class="menu-toggle" id="menu-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>CREATIVE MEDIA PRODUCTION</h1>
+            <p>Scroll-stopping content designed to convert and build trust</p>
+        </div>
+    </section>
+
+    <!-- Service Overview -->
+    <section class="service-overview section">
+        <div class="container">
+            <div class="overview-content">
+                <h2 class="section-title">CONTENT THAT COMMANDS ATTENTION</h2>
+                <p class="overview-text">
+                    We craft scroll-stopping content that doesn't just look good – it converts. From short-form videos that go viral to branded visuals that build trust, our creative team understands the psychology behind what makes people stop, watch, and take action.
+                </p>
+                <p class="overview-text">
+                    Every piece of content is strategically designed to resonate with your target audience, reflect your brand's personality, and drive meaningful engagement that translates into real business results.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Content Types Section -->
+    <section class="content-section section">
+        <div class="container">
+            <h2 class="section-title">CONTENT THAT CONVERTS</h2>
+            <div class="content-types">
+                <div class="content-card">
+                    <div class="content-icon">
+                        <i class="fas fa-video"></i>
+                    </div>
+                    <h3>Short-Form Videos</h3>
+                    <p>Engaging video content optimized for social media platforms that captures attention and drives action.</p>
+                    <ul class="content-features">
+                        <li><i class="fas fa-check"></i> Instagram Reels & Stories</li>
+                        <li><i class="fas fa-check"></i> TikTok-style content</li>
+                        <li><i class="fas fa-check"></i> Facebook video ads</li>
+                        <li><i class="fas fa-check"></i> Product demonstrations</li>
+                        <li><i class="fas fa-check"></i> Behind-the-scenes content</li>
+                    </ul>
+                </div>
+                <div class="content-card">
+                    <div class="content-icon">
+                        <i class="fas fa-palette"></i>
+                    </div>
+                    <h3>Branded Visuals</h3>
+                    <p>Professional graphics and imagery that establish credibility and reinforce your brand identity.</p>
+                    <ul class="content-features">
+                        <li><i class="fas fa-check"></i> Social media graphics</li>
+                        <li><i class="fas fa-check"></i> Ad creatives & banners</li>
+                        <li><i class="fas fa-check"></i> Infographics</li>
+                        <li><i class="fas fa-check"></i> Logo & brand design</li>
+                        <li><i class="fas fa-check"></i> Marketing materials</li>
+                    </ul>
+                </div>
+                <div class="content-card">
+                    <div class="content-icon">
+                        <i class="fas fa-camera"></i>
+                    </div>
+                    <h3>Photography</h3>
+                    <p>Professional product and lifestyle photography that showcases your offerings in the best light.</p>
+                    <ul class="content-features">
+                        <li><i class="fas fa-check"></i> Product photography</li>
+                        <li><i class="fas fa-check"></i> Lifestyle shoots</li>
+                        <li><i class="fas fa-check"></i> Corporate headshots</li>
+                        <li><i class="fas fa-check"></i> Event photography</li>
+                        <li><i class="fas fa-check"></i> Stock photo curation</li>
+                    </ul>
+                </div>
+                <div class="content-card">
+                    <div class="content-icon">
+                        <i class="fas fa-pen-fancy"></i>
+                    </div>
+                    <h3>Copywriting</h3>
+                    <p>Compelling copy that speaks directly to your audience and motivates them to take action.</p>
+                    <ul class="content-features">
+                        <li><i class="fas fa-check"></i> Ad copy & headlines</li>
+                        <li><i class="fas fa-check"></i> Social media captions</li>
+                        <li><i class="fas fa-check"></i> Email marketing copy</li>
+                        <li><i class="fas fa-check"></i> Website content</li>
+                        <li><i class="fas fa-check"></i> Sales page copy</li>
+                    </ul>
+                </div>
+                <div class="content-card">
+                    <div class="content-icon">
+                        <i class="fas fa-film"></i>
+                    </div>
+                    <h3>Long-Form Video</h3>
+                    <p>In-depth video content that educates, entertains, and builds deep connections with your audience.</p>
+                    <ul class="content-features">
+                        <li><i class="fas fa-check"></i> Educational tutorials</li>
+                        <li><i class="fas fa-check"></i> Company story videos</li>
+                        <li><i class="fas fa-check"></i> Customer testimonials</li>
+                        <li><i class="fas fa-check"></i> Webinar production</li>
+                        <li><i class="fas fa-check"></i> Documentary-style content</li>
+                    </ul>
+                </div>
+                <div class="content-card">
+                    <div class="content-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3>Interactive Content</h3>
+                    <p>Engaging, interactive experiences that boost engagement and provide valuable user data.</p>
+                    <ul class="content-features">
+                        <li><i class="fas fa-check"></i> Polls & quizzes</li>
+                        <li><i class="fas fa-check"></i> Interactive stories</li>
+                        <li><i class="fas fa-check"></i> AR filters</li>
+                        <li><i class="fas fa-check"></i> Contests & giveaways</li>
+                        <li><i class="fas fa-check"></i> User-generated content campaigns</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Process Section -->
+    <section class="process section">
+        <div class="container">
+            <h2 class="section-title">OUR CREATIVE PROCESS</h2>
+            <div class="process-steps">
+                <div class="process-step">
+                    <div class="step-number">1</div>
+                    <h3>Strategy & Discovery</h3>
+                    <p>Deep dive into your brand, audience, and goals to develop content strategy that resonates.</p>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">2</div>
+                    <h3>Creative Planning</h3>
+                    <p>Brainstorm unique concepts and detailed production planning for maximum efficiency and quality.</p>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">3</div>
+                    <h3>Content Creation</h3>
+                    <p>Professional production using industry-leading tools and techniques to bring concepts to life.</p>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">4</div>
+                    <h3>Delivery & Analytics</h3>
+                    <p>Expert post-production and timely delivery with performance tracking to measure impact.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Section -->
+    <!-- <section class="portfolio section">
+        <div class="container">
+            <h2 class="section-title">CONTENT THAT PERFORMS</h2>
+            <div class="portfolio-grid">
+                <div class="portfolio-item">
+                    <div class="portfolio-image">
+                        <i class="fas fa-play-circle"></i>
+                    </div>
+                    <div class="portfolio-content">
+                        <h4>E-commerce Product Launch</h4>
+                        <p>Complete video campaign for new product line including hero videos, social content, and user-generated content strategy.</p>
+                        <div class="portfolio-metrics">
+                            <div class="metric">
+                                <div class="metric-value">2.5M</div>
+                                <div class="metric-label">Views</div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-value">12%</div>
+                                <div class="metric-label">Engagement</div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-value">300%</div>
+                                <div class="metric-label">Sales Boost</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="portfolio-item">
+                    <div class="portfolio-image">
+                        <i class="fas fa-camera"></i>
+                    </div>
+                    <div class="portfolio-content">
+                        <h4>Restaurant Brand Photography</h4>
+                        <p>Complete visual rebrand including food photography, lifestyle shots, and social media content library.</p>
+                        <div class="portfolio-metrics">
+                            <div class="metric">
+                                <div class="metric-value">500+</div>
+                                <div class="metric-label">Photos</div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-value">85%</div>
+                                <div class="metric-label">Engagement Up</div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-value">200%</div>
+                                <div class="metric-label">Bookings Up</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="portfolio-item">
+                    <div class="portfolio-image">
+                        <i class="fas fa-palette"></i>
+                    </div>
+                    <div class="portfolio-content">
+                        <h4>Tech Startup Rebrand</h4>
+                        <p>Complete visual identity overhaul including logo design, brand guidelines, and marketing collateral.</p>
+                        <div class="portfolio-metrics">
+                            <div class="metric">
+                                <div class="metric-value">100%</div>
+                                <div class="metric-label">Brand Refresh</div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-value">150%</div>
+                                <div class="metric-label">Lead Quality</div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-value">250%</div>
+                                <div class="metric-label">Recognition</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <!-- <section class="pricing section">
+        <div class="container">
+            <h2 class="section-title">CREATIVE PACKAGES</h2>
+            <p class="section-subtitle">Professional content creation packages designed to elevate your brand</p>
+            <div class="pricing-cards">
+                <div class="pricing-card">
+                    <div class="plan-name">Content Starter</div>
+                    <div class="plan-price">$2,000</div>
+                    <div class="plan-period">per month</div>
+                    <ul class="plan-features">
+                        <li><i class="fas fa-check"></i> 8 social media graphics</li>
+                        <li><i class="fas fa-check"></i> 4 short-form videos</li>
+                        <li><i class="fas fa-check"></i> Basic copywriting</li>
+                        <li><i class="fas fa-check"></i> 2 revisions per piece</li>
+                        <li><i class="fas fa-check"></i> Social media templates</li>
+                    </ul>
+                    <a href="index.html#contact" class="plan-button">Get Started</a>
+                </div>
+                <div class="pricing-card featured">
+                    <div class="plan-name">Content Pro</div>
+                    <div class="plan-price">$3,500</div>
+                    <div class="plan-period">per month</div>
+                    <ul class="plan-features">
+                        <li><i class="fas fa-check"></i> 15 social media graphics</li>
+                        <li><i class="fas fa-check"></i> 8 short-form videos</li>
+                        <li><i class="fas fa-check"></i> 2 long-form videos</li>
+                        <li><i class="fas fa-check"></i> Professional copywriting</li>
+                        <li><i class="fas fa-check"></i> Brand photography session</li>
+                        <li><i class="fas fa-check"></i> Unlimited revisions</li>
+                        <li><i class="fas fa-check"></i> Content calendar planning</li>
+                    </ul>
+                    <a href="index.html#contact" class="plan-button">Get Started</a>
+                </div>
+                <div class="pricing-card">
+                    <div class="plan-name">Content Premium</div>
+                    <div class="plan-price">$5,500</div>
+                    <div class="plan-period">per month</div>
+                    <ul class="plan-features">
+                        <li><i class="fas fa-check"></i> Unlimited graphics & visuals</li>
+                        <li><i class="fas fa-check"></i> 15 short-form videos</li>
+                        <li><i class="fas fa-check"></i> 4 long-form videos</li>
+                        <li><i class="fas fa-check"></i> Monthly photo/video shoots</li>
+                        <li><i class="fas fa-check"></i> Interactive content creation</li>
+                        <li><i class="fas fa-check"></i> Brand strategy consultation</li>
+                        <li><i class="fas fa-check"></i> Priority support & fast delivery</li>
+                    </ul>
+                    <a href="index.html#contact" class="plan-button">Get Started</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    -->
+
+    <!-- CTA Section -->
+    <section class="cta-section section">
+        <div class="container">
+            <h2 class="section-title">READY TO CREATE CONTENT THAT CONVERTS?</h2>
+            <p class="section-subtitle">Let's build a content strategy that captures attention and drives results</p>
+            <a href="index.html#contact" class="cta-button">START CREATING</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="social-links">
+                <a href="https://instagram.com/thrivemint" target="_blank" aria-label="Instagram">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="https://linkedin.com/company/thrivemint" target="_blank" aria-label="LinkedIn">
+                    <i class="fab fa-linkedin-in"></i>
+                </a>
+            </div>
+            <p>&copy; 2024 ThriveMint. All rights reserved. | Empowering small businesses with big-brand strategies.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Mobile menu toggle
+        const menuToggle = document.getElementById('menu-toggle');
+        const navLinks = document.getElementById('nav-links');
+
+        menuToggle.addEventListener('click', function() {
+            navLinks.classList.toggle('active');
+        });
+
+        // Intersection Observer for fade-in animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all sections
+        document.querySelectorAll('.section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!menuToggle.contains(e.target) && !navLinks.contains(e.target)) {
+                navLinks.classList.remove('active');
+            }
+        });
+    </script>
+</body>
+</html>

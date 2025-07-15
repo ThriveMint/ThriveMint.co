@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon" type="image/x-icon" href="photos/abc.ico">
+    <link rel="shortcut icon" type="image/x-icon" href="photos/abc.ico">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consulting - ThriveMint</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .navbar.scrolled {
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo-text-image {
+            height: 45px;
+            object-fit: contain;
+            transition: all 0.3s ease;
+        }
+
+        .logo-text-image:hover {
+            transform: scale(1.05);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: #82c576;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #82c576;
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .menu-toggle span {
+            width: 25px;
+            height: 3px;
+            background: #333;
+            margin: 3px 0;
+            transition: 0.3s;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #82c576 0%, #56CCF2 100%);
+            min-height: 40vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><polygon fill="rgba(255,255,255,0.1)" points="0,1000 1000,800 1000,1000"/></svg>');
+            background-size: cover;
+        }
+
+        .hero-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            text-align: center;
+            color: white;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-top: 5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s ease forwards;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s ease 0.3s forwards;
+        }
+
+        /* Section Styles */
+        .section {
+            padding: 5rem 0;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s ease;
+        }
+
+        .section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 3rem;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 4rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Service Overview */
+        .service-overview {
+            background: #f8f9fa;
+        }
+
+        .overview-content {
+            max-width: 900px;
+            max-height: 40vh;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .overview-text {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: #666;
+            margin-bottom: 1rem;
+        }
+
+        /* Consulting Areas - FIXED - All three in a single row with consistent layout */
+        .consulting-areas {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 3rem;
+            margin-top: 3rem;
+            max-width: 1400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .area-card {
+            background: white;
+            padding: 2rem 1.5rem;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            height: 450px; /* Fixed height for all cards */
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+        }
+
+        .area-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(135deg, #82c576, #56CCF2);
+        }
+
+        .area-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+        }
+
+        .area-icon {
+            width: 80px;
+            height: 80px;
+            background: #FFA447;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-size: 2rem;
+            color: white;
+            flex-shrink: 0;
+        }
+
+        .area-card h3 {
+            font-size: 1.35rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 1rem;
+            flex-shrink: 0;
+            line-height: 1.3;
+            min-height: 2.6rem; /* Ensures consistent title height */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .area-card p {
+            color: #666;
+            line-height: 1.5;
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+            flex-shrink: 0;
+            min-height: 3rem; /* Ensures consistent description height */
+        }
+
+        .area-features {
+            list-style: none;
+            text-align: left;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            gap: 0.5rem;
+        }
+
+        .area-features li {
+            padding: 0.4rem 0;
+            color: #666;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .area-features li i {
+            color: #82c576;
+            margin-right: 0.5rem;
+            width: 15px;
+            flex-shrink: 0;
+        }
+
+        /* Process Section - Updated to 4 steps in a single row */
+        .process {
+            background: linear-gradient(135deg, #82c576 0%, #56CCF2 100%);
+            color: white;
+        }
+
+        .process h2 {
+            color: white;
+        }
+
+        .process-steps {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 4rem;
+            margin-top: 3rem;
+            max-width: 1600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .process-step {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 2rem 1.2rem;
+            border-radius: 15px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            height: 320px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+        }
+
+        .step-number {
+            width: 60px;
+            height: 60px;
+            background: #FFA447;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 2rem;
+            font-size: 1.5rem;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .process-step h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            flex-shrink: 0;
+            line-height: 1.2;
+        }
+
+        .process-step p {
+            line-height: 1.4;
+            font-size: 0.9rem;
+            flex-grow: 1;
+            display: flex;
+            align-items: flex-start;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        /* Deliverables Section */
+        .deliverables {
+            background: #f8f9fa;
+        }
+
+        .deliverables-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .deliverable-item {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .deliverable-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .deliverable-icon {
+            width: 60px;
+            height: 60px;
+            background: #82c576;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        .deliverable-item h4 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 1rem;
+        }
+
+        .deliverable-item p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* CTA Section */
+        /* CTA Section */
+        .cta-section {
+            padding: 6rem 0;
+            background: #1a202c;
+            color: white;
+            text-align: center;
+        }
+
+        .cta-content {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .cta-section .section-title {
+            color: white;
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .cta-section .section-subtitle {
+            color: #cbd5e0;
+            margin-bottom: 3rem;
+        }
+
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+            background: linear-gradient(135deg, #82c576, #56CCF2);
+            color: white;
+            padding: 1.2rem 3rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(130, 197, 118, 0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(130, 197, 118, 0.4);
+        }
+
+        /* Footer */
+        .footer {
+            background: #0f172a;
+            color: white;
+            padding: 3rem 0 2rem;
+            text-align: center;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #82c576, #56CCF2);
+            color: white;
+            border-radius: 12px;
+            text-decoration: none;
+            font-size: 1.3rem;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(130, 197, 118, 0.3);
+        }
+
+        .footer p {
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+        /* Animations */
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: flex;
+            }
+
+            .nav-links {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: white;
+                flex-direction: column;
+                padding: 2rem;
+                box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+                transform: translateY(-100%);
+                opacity: 0;
+                visibility: hidden;
+                transition: all 0.3s ease;
+            }
+
+            .nav-links.active {
+                transform: translateY(0);
+                opacity: 1;
+                visibility: visible;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .consulting-areas {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .area-card {
+                height: 400px;
+                max-width: 400px;
+                margin: 0 auto;
+            }
+
+            .process-steps {
+                grid-template-columns: 1fr;
+            }
+
+            .deliverables-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .nav-container {
+                padding: 0 1rem;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .container {
+                padding: 0 1rem;
+            }
+
+            .section {
+                padding: 3rem 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <img src="photos/logo.png" alt="ThriveMint" class="logo-text-image">
+            </div>
+            <ul class="nav-links" id="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="index.html#services">Services</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+            <div class="menu-toggle" id="menu-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>STRATEGIC CONSULTING</h1>
+            <p>Clear roadmaps to boost your online visibility and conversions</p>
+        </div>
+    </section>
+
+    <!-- Service Overview -->
+    <section class="service-overview section">
+        <div class="container">
+            <div class="overview-content">
+                <h2 class="section-title">STRATEGIC INSIGHTS THAT DRIVE GROWTH</h2>
+                <p class="overview-text">
+                    We identify what's working, what's not, and deliver a clear roadmap to boost your online visibility and conversions. Our strategic consulting goes beyond surface-level advice to provide actionable insights tailored to your business goals and market position.
+                </p>
+                <p class="overview-text">
+                    Whether you need a complete digital strategy overhaul or want to optimize specific areas of your marketing, our consulting services provide the clarity and direction you need to make informed decisions that drive real growth.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Consulting Areas -->
+    <section class="consulting-section section">
+        <div class="container">
+            <h2 class="section-title">AREAS OF EXPERTISE</h2>
+            <div class="consulting-areas">
+                <div class="area-card">
+                    <div class="area-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>Team Training & Development</h3>
+                    <p>Empower your team with the knowledge and skills needed to execute successful strategies.</p>
+                    <ul class="area-features">
+                        <li><i class="fas fa-check"></i> Digital marketing workshops</li>
+                        <li><i class="fas fa-check"></i> Social media training</li>
+                        <li><i class="fas fa-check"></i> Analytics interpretation</li>
+                    </ul>
+                </div>
+                <div class="area-card">
+                    <div class="area-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3>Performance Analysis</h3>
+                    <p>Deep-dive analytics and reporting to understand what's driving results and where to focus efforts.</p>
+                    <ul class="area-features">
+                        <li><i class="fas fa-check"></i> ROI analysis</li>
+                        <li><i class="fas fa-check"></i> Attribution modeling</li>
+                        <li><i class="fas fa-check"></i> Conversion rate optimization</li>
+                    </ul>
+                </div>
+                <div class="area-card">
+                    <div class="area-icon">
+                        <i class="fas fa-rocket"></i>
+                    </div>
+                    <h3>Scale Preparation</h3>
+                    <p>Prepare your business infrastructure and marketing systems for rapid growth and scaling.</p>
+                    <ul class="area-features">
+                        <li><i class="fas fa-check"></i> Scalability assessment</li>
+                        <li><i class="fas fa-check"></i> Systems integration</li>
+                        <li><i class="fas fa-check"></i> Expansion strategy</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Process Section -->
+    <section class="process section">
+        <div class="container">
+            <h2 class="section-title">OUR CONSULTING PROCESS</h2>
+            <div class="process-steps">
+                <div class="process-step">
+                    <div class="step-number">1</div>
+                    <h3>Strategy & Discovery</h3>
+                    <p>Analyze your business goals and market position to understand unique opportunities.</p>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">2</div>
+                    <h3>Performance Audit</h3>
+                    <p>Evaluate your marketing efforts and competitive landscape to identify gaps and potential.</p>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">3</div>
+                    <h3>Custom Roadmap</h3>
+                    <p>Create a strategic plan with clear priorities and actionable implementation steps.</p>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">4</div>
+                    <h3>Implementation & Support</h3>
+                    <p>Provide training and ongoing guidance for successful execution and optimization.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Deliverables Section -->
+    <section class="deliverables section">
+        <div class="container">
+            <h2 class="section-title">WHAT YOU'LL RECEIVE</h2>
+            <div class="deliverables-grid">
+                <div class="deliverable-item">
+                    <div class="deliverable-icon">
+                        <i class="fas fa-file-alt"></i>
+                    </div>
+                    <h4>Strategic Roadmap</h4>
+                    <p>Comprehensive document outlining your complete digital marketing strategy with clear priorities and timelines.</p>
+                </div>
+                <div class="deliverable-item">
+                    <div class="deliverable-icon">
+                        <i class="fas fa-chart-bar"></i>
+                    </div>
+                    <h4>Performance Audit Report</h4>
+                    <p>Detailed analysis of your current performance with identified opportunities and recommendations for improvement.</p>
+                </div>
+                <div class="deliverable-item">
+                    <div class="deliverable-icon">
+                        <i class="fas fa-tasks"></i>
+                    </div>
+                    <h4>Implementation Checklist</h4>
+                    <p>Step-by-step action items with deadlines and responsible parties to ensure smooth execution of strategies.</p>
+                </div>
+                <div class="deliverable-item">
+                    <div class="deliverable-icon">
+                        <i class="fas fa-bullseye"></i>
+                    </div>
+                    <h4>KPI Framework</h4>
+                    <p>Custom metrics and tracking system to measure progress and ensure accountability for results.</p>
+                </div>
+                <div class="deliverable-item">
+                    <div class="deliverable-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <h4>Training Materials</h4>
+                    <p>Educational resources and documentation to empower your team with ongoing knowledge and best practices.</p>
+                </div>
+                <div class="deliverable-item">
+                    <div class="deliverable-icon">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <h4>Ongoing Support</h4>
+                    <p>Access to our team for questions, guidance, and strategy adjustments as your business evolves.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section section">
+        <div class="container">
+            <h2 class="section-title">READY TO ACCELERATE YOUR GROWTH?</h2>
+            <p class="section-subtitle">Let's create a strategic roadmap that drives real results for your business</p>
+            <a href="index.html#contact" class="cta-button">BOOK YOUR STRATEGY SESSION</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="social-links">
+                <a href="https://instagram.com/thrivemint" target="_blank" aria-label="Instagram">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="https://linkedin.com/company/thrivemint" target="_blank" aria-label="LinkedIn">
+                    <i class="fab fa-linkedin-in"></i>
+                </a>
+            </div>
+            <p>&copy; 2024 ThriveMint. All rights reserved. | Empowering small businesses with big-brand strategies.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Mobile menu toggle
+        const menuToggle = document.getElementById('menu-toggle');
+        const navLinks = document.getElementById('nav-links');
+
+        menuToggle.addEventListener('click', function() {
+            navLinks.classList.toggle('active');
+        });
+
+        // Intersection Observer for fade-in animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all sections
+        document.querySelectorAll('.section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!menuToggle.contains(e.target) && !navLinks.contains(e.target)) {
+                navLinks.classList.remove('active');
+            }
+        });
+    </script>
+</body>
+</html>
