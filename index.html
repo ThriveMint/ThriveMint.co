@@ -540,6 +540,26 @@
             box-shadow: 0 10px 30px rgba(255, 164, 71, 0.3);
         }
 
+        /* Success Message Styling */
+        .success-message {
+            background: rgba(130, 197, 118, 0.9);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-top: 1.5rem;
+            text-align: center;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(10px);
+            transform: translateY(20px);
+            opacity: 0;
+            transition: all 0.5s ease;
+        }
+
+        .success-message.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
         /* Footer */
         .footer {
             background: #0f172a;
@@ -919,27 +939,27 @@
             <h2 class="section-title">READY TO BUILD A BUSINESS YOU DESERVE?</h2>
             <p class="section-subtitle">We'll take your business to the next level through consulting, custom web development, and creative media production.</p>
             
-            <form class="contact-form" name="contact">
+            <form class="contact-form" name="contact" method="POST" action="#">
                 <div class="form-group">
                     <label for="name">Full Name *</label>
-                    <input type="text" id="name" name="name" required>
+                    <input type="text" id="name" name="name" required autocomplete="name" placeholder="Enter your full name">
                 </div>
                 <div class="form-group">
                     <label for="email">Email Address *</label>
-                    <input type="email" id="email" name="email" required>
+                    <input type="email" id="email" name="email" required autocomplete="email" placeholder="your.email@example.com">
                 </div>
                 <div class="form-group">
                     <label for="phone">Phone Number</label>
-                    <input type="tel" id="phone" name="phone">
+                    <input type="tel" id="phone" name="phone" autocomplete="tel" placeholder="(555) 123-4567">
                 </div>
                 <div class="form-group">
                     <label for="company">Company Name</label>
-                    <input type="text" id="company" name="company">
+                    <input type="text" id="company" name="company" autocomplete="organization" placeholder="Your Company Name">
                 </div>
                 <div class="form-group">
-                    <label for="service">Service Interest</label>
-                    <select id="service" name="service">
-                        <option value="">Select a service</option>
+                    <label for="service">Service Interest *</label>
+                    <select id="service" name="service" required>
+                        <option value="">Select a service *</option>
                         <option value="web-development">Web Development</option>
                         <option value="creative-media">Creative Media Production</option>
                         <option value="consulting">Consulting</option>
@@ -947,10 +967,16 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="message">Message</label>
-                    <textarea id="message" name="message" placeholder="Tell us about your business goals and how we can help..."></textarea>
+                    <label for="message">Message *</label>
+                    <textarea id="message" name="message" required placeholder="Tell us about your business goals and how we can help you grow..."></textarea>
                 </div>
                 <button type="submit" class="submit-btn">BOOK A CALL</button>
+                
+                <!-- Success Message -->
+                <div class="success-message" id="success-message" style="display: none;">
+                    <strong>Thank you for your message!</strong><br>
+                    We've received your inquiry and will respond within 24-48 hours. We're excited to learn more about your business goals and help you grow!
+                </div>
             </form>
         </div>
     </section>
@@ -1031,7 +1057,13 @@
                 e.preventDefault(); // Prevent default form submission
                 
                 const submitBtn = document.querySelector('.submit-btn');
+                const successMessage = document.getElementById('success-message');
                 const originalText = submitBtn.textContent;
+                
+                // Reset success message state
+                successMessage.style.display = 'none';
+                successMessage.classList.remove('show');
+                
                 submitBtn.textContent = 'SENDING...';
                 submitBtn.disabled = true;
                 
@@ -1069,12 +1101,18 @@
                         submitBtn.style.background = '#82c576';
                         form.reset();
                         
-                        // Reset button after 3 seconds
+                        // Show success message with animation
+                        successMessage.style.display = 'block';
+                        setTimeout(() => {
+                            successMessage.classList.add('show');
+                        }, 100);
+                        
+                        // Reset button after 5 seconds
                         setTimeout(() => {
                             submitBtn.textContent = originalText;
                             submitBtn.style.background = '#FFA447';
                             submitBtn.disabled = false;
-                        }, 3000);
+                        }, 5000);
                     } else {
                         throw new Error('Both services failed');
                     }
