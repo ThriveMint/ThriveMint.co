@@ -823,7 +823,26 @@
     <section class="hero">
         <div class="hero-content">
             <div class="profile-section">
-                <img src="photos/sam_photo.jpg" alt="Sam's Professional Headshot" class="profile-image">
+                <picture>
+                    <source srcset="photos/sam_photo.webp 200w,
+                                    photos/sam_photo.webp 400w"
+                            sizes="(max-width: 480px) 120px,
+                                   (max-width: 768px) 150px,
+                                   200px"
+                            type="image/webp">
+                    <img src="photos/sam_photo.jpg"
+                         srcset="photos/sam_photo.jpg 200w,
+                                 photos/sam_photo.jpg 400w"
+                         sizes="(max-width: 480px) 120px,
+                                (max-width: 768px) 150px,
+                                200px"
+                         alt="Sam's Professional Headshot"
+                         class="profile-image"
+                         width="200"
+                         height="200"
+                         loading="lazy"
+                         decoding="async">
+                </picture>
                 <div>
                     <h1>Hi I'm Sam</h1>
                     <p>I help businesses achieve growth through marketing mediums so that they can thrive and live up to their potential.</p>
