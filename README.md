@@ -1,1 +1,1 @@
-# ThriveMint.co
+# tm.co
